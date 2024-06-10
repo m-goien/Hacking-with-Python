@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+    Bike Item
+{% endblock %}
+
+{% block content %}
+<br>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Column</th>
+      <th scope="col">Informations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Id</th>
+      <td>{{ items[0] }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Bikename</th>
+      <td>{{ items[1] | safe  }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Size</th>
+      <td>{{ items[2] }}</td>
+    </tr>
+    <tr>
+      <th scope="row">User</th>
+      <td>{{ items[3] }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Description</th>
+      <td>{{ items[4] | safe }}</td>
+    </tr>
+  </tbody>
+</table>
+<a class="btn btn-dark" href="{{ url_for('bikes_page') }}">Back to Bikes</a>
+{% endblock %}

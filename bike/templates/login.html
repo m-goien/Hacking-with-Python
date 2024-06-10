@@ -1,0 +1,25 @@
+{% extends 'base.html' %} <!--jinja: Erbt von base.htm-->
+
+{% block title %}
+  Login
+{% endblock %}
+<!--jinja: block title in base wird ersetzt-->
+
+{% block content %} <!--jinja: block content in base wird ersetzt-->
+<body class="text-center" xmlns="http://www.w3.org/1999/html">
+    <div class="container">
+        <form method="POST" class="form-register" action="/login" style="color:black">
+            <br>
+            <img class="mb-4" src="static/bike_cartoon_200.png" alt="bike_cartoon" style="width:200px;">
+            <br>
+            <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
+            <label for="Username" class="form-label">Username</label>
+            <input type="text" id = Username name="Username" class="form-control">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" id = Password name="Password" class="form-control" aria-describedby="passwordHelpBlock">
+            <br>
+            <button type="submit" class="btn btn-dark">Login</button>
+        </form>
+    </div>
+</body>
+{% endblock %}
